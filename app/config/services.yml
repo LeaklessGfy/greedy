@@ -1,0 +1,34 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    need.service:
+        class: AppBundle\Services\NeedService
+        arguments: [ "@doctrine.orm.entity_manager", "@session" ]
+
+    chat_room.service:
+        class: AppBundle\Services\ChatService
+        arguments: [ "@doctrine.orm.entity_manager", "@session" ]
+
+    invitations.service:
+        class: AppBundle\Services\InvitService
+        arguments: [ "@session", "@doctrine.orm.entity_manager", "@service_container" ]
+
+    validator.unique.unicode:
+        class: AppBundle\Validator\Constraints\UniCodeValidator
+        arguments:
+                entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: validator.constraint_validator, alias: UniCode }
+
+    validator.unique.uniuser:
+        class: AppBundle\Validator\Constraints\UniUserValidator
+        arguments:
+                entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: validator.constraint_validator, alias: UniUser }

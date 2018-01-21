@@ -1,0 +1,15 @@
+{% if not formNeeds.vars.valid %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#addNeed').modal('show');
+        });
+    </script>
+{% endif %}
+
+{% if app.user.ereputation == 0 %}
+    <script>
+        $(document).ready(function() {
+            $('#firstTime').modal('show');
+        });
+    </script>
+{% endif %}

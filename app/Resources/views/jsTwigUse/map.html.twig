@@ -1,0 +1,150 @@
+<script>
+    function initialize() {
+        var bounds = new google.maps.LatLngBounds();
+
+        {% if app.user.city %}
+            var myLatlng = new google.maps.LatLng({{ app.user.city.cityLatitudeDeg }},{{ app.user.city.cityLongitudeDeg }});
+        {% else %}
+        var myLatlng = new google.maps.LatLng(48.87146,2.35500);
+        {% endif %}
+        var mapOptions = {
+            zoom: 12,
+            center: myLatlng,
+            scrollwheel: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+            draggableCursor: 'default'
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        var markers = [
+            {% for need in allNeeds %}
+                {% if need.position %}
+                    ['{{ need.title }}', {{ need.position.latitude }},{{ need.position.longitude }}],
+                {% endif %}
+            {% endfor %}
+        ];
+
+    var infoWindowContent = [
+    {% for need in allNeeds %}
+    {% if need.position %}
+        ['<div class="info_content">' +
+        '<h3>{{ need.title }}</h3>' +
+        '<p>{{ need.description }}</p>' +
+        '<p>- {{ need.owner.username }} ({{ need.owner.eReputation }})</p>'],
+        {% endif %}
+    {% endfor %}
+    ];
+
+    map.set('styles', [
+        {
+            "featureType":"water",
+            "elementType":"geometry",
+            "stylers":[
+                {"color":"#193341"}
+            ]
+        },
+        {
+            "featureType":"landscape",
+            "elementType":"geometry",
+            "stylers":[
+                {"color":"#2c5a71"}
+            ]
+        },
+        {
+            "featureType":"road",
+            "elementType":"geometry",
+            "stylers":[
+                {"color":"#29768a"},
+                {"lightness":-37}
+            ]
+        },
+        { "featureType": "road.local", "stylers": [ { "visibility": "off" } ] },
+        { "featureType": "road.arterial", "elementType": "labels", "stylers": [ { "visibility": "off" } ] },
+        { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "visibility": "off" } ] },
+        {
+            "featureType":"poi",
+            "elementType":"geometry",
+            "stylers":[
+                {"color":"#406d80"},
+                {"visibility": "off"}
+            ]
+        },
+        {
+            "featureType":"transit",
+            "elementType":"geometry",
+            "stylers":[
+                {"visibility": "off"}
+            ]
+        },
+        {
+            "elementType":"labels.text.stroke",
+            "stylers":[
+                {"color":"#3e606f"},
+                {"weight":2},
+                {"gamma":0.84},
+            ]
+        },
+        {
+            "elementType":"labels.text.fill",
+            "stylers":[
+                {"color":"#ffffff"},
+            ]
+        },
+        {
+            "featureType":"administrative",
+            "elementType":"geometry",
+            "stylers":[
+                {"weight":0.6},
+                {"color":"#1a3541"}
+            ]
+        },
+        {
+            "featureType": "administrative.neighborhood",
+            "stylers":[
+                { "visibility": "off" }
+            ]
+        },
+        {
+            "elementType":"labels.icon",
+            "stylers":[
+                {"visibility":"off"}
+            ]
+        }
+    ]);
+
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+    for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            draggable: true,
+            title: markers[i][0],
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#00CCBB',
+                fillOpacity: 1,
+                strokeColor: '#000',
+                strokeWeight: 2,
+                scale: 12
+            }
+        });
+
+        // Allow each marker to have an info window
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+
+        google.maps.event.addListener(map, "click", function(event) {
+            infoWindow.close();
+        });
+    }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>

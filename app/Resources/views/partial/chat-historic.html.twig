@@ -1,0 +1,64 @@
+<div class="panel panel-default chat-room">
+    <div class="panel-heading">
+        <h3 class="panel-info">{{ activeObj.need.title|upper }} - {{ activeObj.need.quantity }}{{ activeObj.need.measure }}</h3>
+        <p>A pourvoir avant le : {{ activeObj.need.endDate|date('d M Y') }}</p>
+        <p>Aux alentours de : {{ activeObj.need.position.city.cityNomReel }}, {{ activeObj.need.position.city.cityCodePostal }}</p>
+    </div>
+    <div class="panel-body">
+        <div class="need-historic">
+            {% for messages in activeObj.messages %}
+                <div class="need-historic-item row">
+                    {% if messages.sender.id == app.user.id %}
+                        <div class="col-md-11 col-sm-12 col-xs-12">
+                            <div class="need-historic-msdSend">
+                                <p>{{ messages.content }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="need-historic-author text-center">
+                                <a href="{{ path('app_user_userprofil', {'username': messages.sender.username}) }}">
+                                    Toi
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="need-historic-date text-right">
+                                {{ messages.date|date('H:i - d M') }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-md-1">
+                            <div class="need-historic-author text-center">
+                                <a href="{{ path('app_user_userprofil', {'username': messages.sender.username}) }}">
+                                    {{ messages.sender.username }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-sm-12 col-xs-12">
+                            <div class="need-historic-msdReceive">
+                                <p>{{ messages.content }}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="need-historic-date">
+                                {{ messages.date|date('H:i - d M') }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel-footer">
+        {{ form_start(formMessage, {'attr' : {'novalidate' : 'novalidate'} }) }}
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form_row(formMessage.content, {'attr' : {'rows':3,'placeholder':'T\'as réponse...'}}) }}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                <button class="btn btn-default need-send-msg" title="Répondre"><i class="fa fa-reply fa-3x"></i></button>
+            </div>
+        </div>
+        {{ form_end(formMessage) }}
+    </div>
+</div>

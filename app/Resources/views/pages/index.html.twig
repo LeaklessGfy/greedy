@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block map %}
+    <button id="btn-AddNeed" type="button" data-toggle="modal" data-target="#addNeed" class="btn btn-success">
+        <i class="fa fa-plus"></i> Ajouter une Need
+    </button>
+    <div id="map-canvas"></div>
+{% endblock %}
+
+{% block body %}
+    <div class="index-body container">
+        <h2>Les Needs les plus récentes :</h2>
+        <div class="row">
+            {% for need in allNeeds|slice(0,3) %}
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail need-item">
+                        <div class="need-item-author">
+                            <a href="{{ path('app_user_userprofil', {'username':need.owner.username}) }}">{{ need.owner.username }}</a> ({{ need.owner.eReputation }}) | Enfant de : <a href="{{ path('app_user_userprofil', {'username': need.owner.parent}) }}">{{ need.owner.parent }}</a>
+                        </div>
+
+                        <div class="need-item-author-badge">
+                            <strong>Badge :</strong><br>
+                            {% for badge in need.owner.badges %}
+                                {{ badge.name }}
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <div class="caption need-item-info">
+                            <em class="pull-right">Avant le  {{ need.endDate|date('d - M') }}</em>
+                            <h4><a href="#">{{ need.title }}</a></h4>
+                            <p>{{ need.description }}</p>
+                            <p>Aux alentours de : {{ need.position.city.cityNomReel }} <i>({{ need.position.city.cityDepartement }}, France)</i></p>
+                            <p>{{ need.chatRoom|length }} Feeder</p>
+                        </div>
+                        {% if need.owner.id != app.user.id %}
+                            <div class="need-item-options text-center">
+                                <a href="{{ path('feedNeed', {'id' : need.id }) }}" class="btn btn-success">FeedIt</a>
+                                <button class="btn btn-danger">Signaler</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'modules/addNeed.html' %}
+    {% include 'modules/firstTime.html' %}
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="{{ asset('js/map-icons.min.js') }}"></script>
+    {% include 'jsTwigUse/map.html.twig' %}
+    {% include 'jsTwigUse/modal-show.html.twig' %}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    {{ form_javascript(formNeeds) }}
+{% endblock %}

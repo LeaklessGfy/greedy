@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="chatRoom-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="panel panel-default all-chat-room">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Messages</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <p class="text-center">Aucune conversation disponible.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default chat-room">
+                        <div class="panel-heading">
+                            <h3 class="panel-info"></p>
+                        </div>
+                        <div class="panel-body">
+                            <div class="need-historic">
+                                <p class="text-center">Aucune conversation sélectionnée.</p>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        Option
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

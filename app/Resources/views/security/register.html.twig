@@ -1,0 +1,29 @@
+{% extends 'security/security-base.html.twig' %}
+
+{% block title %}Greedy - S'inscrire{% endblock title %}
+
+{% block body %}
+    <div class="box well register">
+        <h2 class="text-left">Rejoins-nous</h2>
+        {{ form_start(form, {'attr' : {'novalidate' : 'novalidate'} }) }}
+            <div class="form-group {% if not form.uniCode.vars.valid %}has-error{% endif %}">
+                {{ form_label(form.uniCode) }}
+                <div class="input-group">
+                    {{ form_widget(form.uniCode, {'attr' : {'placeholder':'Code unique'}}) }}
+                    <span id="popthis" data-container="body" data-toggle="popover" data-placement="top" data-content="Pour obtenir un code unique, faite vous inviter" class="input-group-addon">
+                        <i class="fa fa-info"></i>
+                    </span>
+                </div>
+                {{ form_errors(form.uniCode) }}
+            </div>
+
+            {{ form_row(form.username, {'attr' : {'placeholder':'Pseudonyme'}}) }}
+            {{ form_row(form.password, {'attr' : {'placeholder':'Mot de passe'}}) }}
+
+            <div>
+                <input type="submit" class="btn btn-success" value="BeGreedy">
+                <a href="{{ path('login') }}" class="btn btn-default">Je suis déjà inscris</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock body %}

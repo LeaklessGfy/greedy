@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="chatRoom-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="panel panel-default all-chat-room">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Messages</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                {% for itemRoom in allChatRoom|sort %}
+                                    {{ itemRoom.need.title }}
+                                    <a href="{{ path('app_chat_chatroom', {'id' : itemRoom.id}) }}" class="list-group-item {% if itemRoom.id == chatRoom.id %}active{% endif %}">
+                                        {% if itemRoom.buyer.id == app.user.id %}
+                                            <strong>{{ itemRoom.seller.username }} ({{ itemRoom.need.title }})</strong>
+                                            <div class="pull-right text-right">
+                                                <i class="fa fa-caret-right"></i> Acheteur
+                                            </div>
+                                        {% else %}
+                                            <strong>{{ itemRoom.buyer.username }} ({{ itemRoom.need.title }})</strong>
+                                            <div class="pull-right text-right">
+                                                <i class="fa fa-caret-right"></i> Vendeur
+                                            </div>
+                                        {% endif %}
+                                        <div class="chat-item-content">
+                                            {% if itemRoom.messages|length %}
+                                                <p>
+                                                    {% if itemRoom.messages|last.sender.id == app.user.id %}
+                                                        <i class="fa fa-reply"></i>
+                                                    {% endif %}
+                                                    {{ itemRoom.messages|last.content }}
+                                                </p>
+                                            {% else %}
+                                                <p class="chat-content-empty">
+                                                    <i class="fa fa-pencil-square-o"></i>   <i>Engager la discussion...</i>
+                                                </p>
+                                            {% endif %}
+                                                <p class="chat-item-date">
+                                                    {{ itemRoom.lastModification|date('H:i - d/m') }}
+                                                </p>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default chat-room">
+                        <div class="panel-heading">
+                            <h3 class="panel-info">{{ chatRoom.need.title|upper }} - {{ chatRoom.need.quantity }}{{ chatRoom.need.measure }}</h3>
+                            <p>A pourvoir avant le : {{ chatRoom.need.endDate|date('d M Y') }}</p>
+                            <p>Aux alentours de : {{ chatRoom.need.position.city.cityNomReel }}, {{ chatRoom.need.position.city.cityCodePostal }}</p>
+                        </div>
+                        <div class="panel-body">
+                            <div class="need-historic">
+                                {% for messages in chatRoom.messages %}
+                                    <div class="need-historic-item row">
+                                        {% if messages.sender.id == app.user.id %}
+                                            <div class="col-md-11 col-sm-12 col-xs-12">
+                                                <div class="need-historic-msdSend">
+                                                    <p>{{ messages.content }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="need-historic-author text-center">
+                                                    <a href="{{ path('app_user_userprofil', {'username': messages.sender.username}) }}">
+                                                        Vous
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="need-historic-date text-right">
+                                                    {{ messages.date|date('H:i - d M') }}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-md-1">
+                                                <div class="need-historic-author text-center">
+                                                    <a href="{{ path('app_user_userprofil', {'username': messages.sender.username}) }}">
+                                                        {{ messages.sender.username }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-11 col-sm-12 col-xs-12">
+                                                <div class="need-historic-msdReceive">
+                                                    <p>{{ messages.content }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="need-historic-date">
+                                                    {{ messages.date|date('H:i - d M') }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            {{ form_start(formMessage, {'attr' : {'novalidate' : 'novalidate'} }) }}
+                            <div class="row">
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+                                    {{ form_row(formMessage.content, {'attr' : {'rows':3,'placeholder':'Votre réponse...'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                                    <button class="btn btn-default need-send-msg" title="Répondre"><i class="fa fa-reply fa-3x"></i></button>
+                                </div>
+                            </div>
+                            {{ form_end(formMessage) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        Option
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include 'modules/deleteNeed.html' %}
+    {% include 'modules/reportAnswer.html' %}
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

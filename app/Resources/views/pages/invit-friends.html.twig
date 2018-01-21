@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="invitFriend-body">
+        <h2>Inviter des amis</h2>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-terminal"></i> Générateur de code</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="{{ asset('img/greedy-fox.png') }}" alt="Greedy Fox" width="150px">
+                        </div>
+
+                        <div>
+                            <blockquote>
+                                <p>Tu peux générer des codes uniques pour que tes amis puissent rejoindre notre communauté de Greedy.<br>
+                                    Tu as le droit à <strong>10 codes maximum</strong>.</p>
+
+                                <p>N'oublies pas, ne donnes tes codes qu'à des personnes de confiance car si une des personnes à qui tu as donné un code est une personne nuisible à l'application Greedy, en plus de bannir le compte de la personne en question, le tient pourrait également l'être.<br>
+                                <strong>On ne veux pas te perdre alors fais attention :D .</strong></p>
+                            </blockquote>
+                        </div>
+
+                        <div class="text-center">
+                            <h4>Il te reste {{ 10 - codeLeft|length }} code(s) à générer</h4>
+
+                            {% if codeLeft|length < 10 and hideSecurity %}
+                                <form class="form-group" action="{{ path('app_user_invitfriends') }}" method="POST">
+                                    <input type="hidden" name="generateOneCode" value="{{ codeToGenerate }}">
+                                    <input type="submit" class="btn btn-success" value="Générer un code unique">
+                                </form>
+                            {% elseif codeLeft|length < 10 and hideSecurity == false %}
+                                <p id="expireMessage"></p>
+                            {% else %}
+                                <p>Tu as épuisé tous tes codes uniques :D ! Merci d'avoir partagé l'application !</p>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <h4 class="text-left">LE CODE A ENVOYER A TON AMI :</h4>
+                                <input type="text" class="form-control" value="{{ generatedCode }}">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {% if app.user.uniCodes|length %}
+                <div class="row">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-barcode"></i> Historique code unique</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Code unique généré</h4>
+                            {% for code in app.user.uniCodes|batch(3) %}
+                                <div class="row">
+                                    {% for entry in code %}
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                <strong>CODE UNIQUE : {{ entry.code }}</strong>
+                                                {% if entry.available == 1 %}
+                                                    <p class="text-success alert-success text-center">Code non utilisé</p>
+                                                {% else %}
+                                                    <p class="text-danger alert-danger text-center">Code utilisé par : <a href="{{ path('app_user_userprofil', {'username' : entry.utilisator.username }) }}">{{ entry.utilisator.username }}</a></p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="{{ asset('js/jquery.plugin.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+    {% if codeLeft|length < 10 and hideSecurity == false %}
+        <script>
+            $(function () {
+                shortly = new Date();
+
+                $('#expireMessage').countdown({until: shortly,
+                    expiryText: '<a href="{{ path('app_user_invitfriends') }}" class="btn btn-info">Actualiser</a>',
+                    format: 'S',
+                    labels: ['Années', 'Mois', 'Semaines', 'Jours', 'Heures', 'Minutes', ' Secondes'],
+                    labels1: ['Année', 'Mois', 'Semaine', 'Jour', 'Heure', 'Minute', ' Seconde']
+                });
+
+                shortly = new Date();
+                shortly.setSeconds(shortly.getSeconds() + 25.5);
+                $('#expireMessage').countdown('option', {until: shortly});
+            });
+        </script>
+    {% endif %}
+{% endblock %}

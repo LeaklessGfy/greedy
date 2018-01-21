@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="favoritCity-body">
+        <h2>Villes favorites</h2>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-street-view"></i> Ma ville principale</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="{{ asset('img/greedy-fox.png') }}" alt="Greedy Fox" width="150px">
+                        </div>
+
+                        <div>
+                            <blockquote>
+                                <p>Entre ici ta ville favorite. Ce sera la ville qui s'affichera par défaut sur la page d'Accueil.</p>
+                            </blockquote>
+                        </div>
+
+                        <div>
+                            {% if app.user.city %}
+                                <p>Votre ville favorite : {{ app.user.city.cityNomReel }}</p>
+                            {% endif %}
+                            {{ form_start(form) }}
+                                {{ form_row(form.codePostal, { 'attr' : {'autocomplete':'off'} }) }}
+                                {{ form_row(form.city, { 'attr':{'disabled':'disabled'} }) }}
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-success" value="Selectionner">
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

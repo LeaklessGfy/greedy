@@ -1,0 +1,21 @@
+<div id="firstTime" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content panel-info">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel"><i class="fa fa-hand-peace-o"></i> Bienvenue {{ app.user.username }} !</h3>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="{{ asset('img/greedy-fox.png') }}" alt="Greedy Fox" width="150px">
+                </div>
+                <blockquote>"Oh ! Salut {{ app.user.username }}, je suis GreedFox.<br> Bienvenue à GreedCity. Ici tu pourras dévoiller au monde entier <i>(enfin surtout la France pour le moment)</i> tes envies, besoins, etc ... Et peut être qu'un Feeder passant par là pourra voir ta Need et y répondra.<br><br> Mais Peut être que tu sais déjà tout ça ? Dis moi {{ app.user.username }}, c'est la première fois qu'on se voit toi et moi mais as tu vraiment besoin d'une petite explication concernant Greedy ? :)"</blockquote>
+
+                <div class="firstTime-options text-center">
+                    <a href="{{ path('tutorialIndex') }}" class="btn btn-success">Acceder au tutorial</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Je n'ai pas besoin du tutorial</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

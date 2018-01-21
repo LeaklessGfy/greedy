@@ -1,0 +1,44 @@
+{% extends "pages/chat-room-alt.html.twig" %}
+
+{% block interface %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default all-chat-room">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Messages</h4>
+                </div>
+
+                <div class="panel-body">
+                    <div class="list-group">
+                        {% for need in allNeeds %}
+                            <div class="list-group-item chat-room-dropdown {% if stopHidden == need.id %}active{% endif %}">
+                                {{ need.title }} ({{ need.chatRoom|length }} réponses) {% if stopHidden != need.id %}<span class="fa fa-caret-right"></span>{% endif %}
+                            </div>
+                            <div class="list-group chat-room-answer {% if stopHidden != need.id %}hidden{% endif %}">
+                                {% for chatRoom in need.chatRoom %}
+                                    <a href="{{ path('app_chat_chatneed', {'id' : chatRoom.id}) }}" class="list-group-item {% if app.request.get('id') == chatRoom.id %}list-group-item-success{% endif %}">
+                                        <strong>{{ chatRoom.seller.username }}</strong>
+                                        <div class="pull-right text-right">
+                                            <i class="fa fa-caret-right"></i> Répondre
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                                {% if need.chatRoom|length < 1 %}<i>Aucun réponse disponnible</i>{% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% if activeObj %}
+                {% include "partial/chat-historic.html.twig" %}
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div class="well">
+                Option
+            </div>
+        </div>
+    </div>
+{% endblock %}

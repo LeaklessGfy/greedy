@@ -1,0 +1,33 @@
+{% extends "pages/chat-room-alt.html.twig" %}
+
+{% block interface %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default all-chat-room">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Messages</h4>
+                </div>
+
+                <div class="panel-body">
+                    <div class="list-group">
+                        {% for feed in allFeeds %}
+                            <a class="list-group-item {% if app.request.get('id') == feed.id %}active{% endif %}" href="{{ path('app_chat_chatfeed', {'id' : feed.id}) }}">
+                                {{ feed.need.title }} - {{ feed.buyer.username }} <span class="fa fa-caret-right"></span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% if activeObj %}
+                {% include "partial/chat-historic.html.twig" %}
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div class="well">
+                Option
+            </div>
+        </div>
+    </div>
+{% endblock %}

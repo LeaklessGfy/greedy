@@ -1,0 +1,819 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cities
+ *
+ * @ORM\Table(name="cities", uniqueConstraints={@ORM\UniqueConstraint(name="city_code_commune_2", columns={"city_code_commune"}), @ORM\UniqueConstraint(name="city_slug", columns={"city_slug"})}, indexes={@ORM\Index(name="city_departement", columns={"city_departement"}), @ORM\Index(name="city_nom", columns={"city_nom"}), @ORM\Index(name="city_nom_reel", columns={"city_nom_reel"}), @ORM\Index(name="city_code_postal", columns={"city_code_postal"}), @ORM\Index(name="city_longitude_latitude_deg", columns={"city_longitude_deg", "city_latitude_deg"}), @ORM\Index(name="city_nom_soundex", columns={"city_nom_soundex"}), @ORM\Index(name="city_nom_metaphone", columns={"city_nom_metaphone"}), @ORM\Index(name="city_population_2010", columns={"city_population_2010"}), @ORM\Index(name="city_nom_simple", columns={"city_nom_simple"})})
+ * @ORM\Entity
+ */
+class Cities
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $cityId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_departement", type="string", length=3, nullable=true)
+     */
+    private $cityDepartement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_slug", type="string", length=255, nullable=true)
+     */
+    private $citySlug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_nom", type="string", length=45, nullable=true)
+     */
+    private $cityNom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_nom_simple", type="string", length=45, nullable=true)
+     */
+    private $cityNomSimple;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_nom_reel", type="string", length=45, nullable=true)
+     */
+    private $cityNomReel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_nom_soundex", type="string", length=20, nullable=true)
+     */
+    private $cityNomSoundex;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_nom_metaphone", type="string", length=22, nullable=true)
+     */
+    private $cityNomMetaphone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_code_postal", type="string", length=255, nullable=true)
+     */
+    private $cityCodePostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_commune", type="string", length=3, nullable=true)
+     */
+    private $cityCommune;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_code_commune", type="string", length=5, nullable=false)
+     */
+    private $cityCodeCommune;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_arrondissement", type="smallint", nullable=true)
+     */
+    private $cityArrondissement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_canton", type="string", length=4, nullable=true)
+     */
+    private $cityCanton;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_amdi", type="smallint", nullable=true)
+     */
+    private $cityAmdi;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_population_2010", type="integer", nullable=true)
+     */
+    private $cityPopulation2010;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_population_1999", type="integer", nullable=true)
+     */
+    private $cityPopulation1999;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_population_2012", type="integer", nullable=true)
+     */
+    private $cityPopulation2012;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_densite_2010", type="integer", nullable=true)
+     */
+    private $cityDensite2010;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="city_surface", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $citySurface;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="city_longitude_deg", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $cityLongitudeDeg;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="city_latitude_deg", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $cityLatitudeDeg;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_longitude_grd", type="string", length=9, nullable=true)
+     */
+    private $cityLongitudeGrd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_latitude_grd", type="string", length=8, nullable=true)
+     */
+    private $cityLatitudeGrd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_longitude_dms", type="string", length=9, nullable=true)
+     */
+    private $cityLongitudeDms;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_latitude_dms", type="string", length=8, nullable=true)
+     */
+    private $cityLatitudeDms;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_zmin", type="integer", nullable=true)
+     */
+    private $cityZmin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city_zmax", type="integer", nullable=true)
+     */
+    private $cityZmax;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Position", mappedBy="city")
+     */
+    protected $positions;
+
+
+    /**
+     * Get cityId
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->cityId;
+    }
+
+    /**
+     * Set cityDepartement
+     *
+     * @param string $cityDepartement
+     * @return Cities
+     */
+    public function setCityDepartement($cityDepartement)
+    {
+        $this->cityDepartement = $cityDepartement;
+
+        return $this;
+    }
+
+    /**
+     * Get cityDepartement
+     *
+     * @return string 
+     */
+    public function getCityDepartement()
+    {
+        return $this->cityDepartement;
+    }
+
+    /**
+     * Set citySlug
+     *
+     * @param string $citySlug
+     * @return Cities
+     */
+    public function setCitySlug($citySlug)
+    {
+        $this->citySlug = $citySlug;
+
+        return $this;
+    }
+
+    /**
+     * Get citySlug
+     *
+     * @return string 
+     */
+    public function getCitySlug()
+    {
+        return $this->citySlug;
+    }
+
+    /**
+     * Set cityNom
+     *
+     * @param string $cityNom
+     * @return Cities
+     */
+    public function setCityNom($cityNom)
+    {
+        $this->cityNom = $cityNom;
+
+        return $this;
+    }
+
+    /**
+     * Get cityNom
+     *
+     * @return string 
+     */
+    public function getCityNom()
+    {
+        return $this->cityNom;
+    }
+
+    /**
+     * Set cityNomSimple
+     *
+     * @param string $cityNomSimple
+     * @return Cities
+     */
+    public function setCityNomSimple($cityNomSimple)
+    {
+        $this->cityNomSimple = $cityNomSimple;
+
+        return $this;
+    }
+
+    /**
+     * Get cityNomSimple
+     *
+     * @return string 
+     */
+    public function getCityNomSimple()
+    {
+        return $this->cityNomSimple;
+    }
+
+    /**
+     * Set cityNomReel
+     *
+     * @param string $cityNomReel
+     * @return Cities
+     */
+    public function setCityNomReel($cityNomReel)
+    {
+        $this->cityNomReel = $cityNomReel;
+
+        return $this;
+    }
+
+    /**
+     * Get cityNomReel
+     *
+     * @return string 
+     */
+    public function getCityNomReel()
+    {
+        return $this->cityNomReel;
+    }
+
+    /**
+     * Set cityNomSoundex
+     *
+     * @param string $cityNomSoundex
+     * @return Cities
+     */
+    public function setCityNomSoundex($cityNomSoundex)
+    {
+        $this->cityNomSoundex = $cityNomSoundex;
+
+        return $this;
+    }
+
+    /**
+     * Get cityNomSoundex
+     *
+     * @return string 
+     */
+    public function getCityNomSoundex()
+    {
+        return $this->cityNomSoundex;
+    }
+
+    /**
+     * Set cityNomMetaphone
+     *
+     * @param string $cityNomMetaphone
+     * @return Cities
+     */
+    public function setCityNomMetaphone($cityNomMetaphone)
+    {
+        $this->cityNomMetaphone = $cityNomMetaphone;
+
+        return $this;
+    }
+
+    /**
+     * Get cityNomMetaphone
+     *
+     * @return string 
+     */
+    public function getCityNomMetaphone()
+    {
+        return $this->cityNomMetaphone;
+    }
+
+    /**
+     * Set cityCodePostal
+     *
+     * @param string $cityCodePostal
+     * @return Cities
+     */
+    public function setCityCodePostal($cityCodePostal)
+    {
+        $this->cityCodePostal = $cityCodePostal;
+
+        return $this;
+    }
+
+    /**
+     * Get cityCodePostal
+     *
+     * @return string 
+     */
+    public function getCityCodePostal()
+    {
+        return $this->cityCodePostal;
+    }
+
+    /**
+     * Set cityCommune
+     *
+     * @param string $cityCommune
+     * @return Cities
+     */
+    public function setCityCommune($cityCommune)
+    {
+        $this->cityCommune = $cityCommune;
+
+        return $this;
+    }
+
+    /**
+     * Get cityCommune
+     *
+     * @return string 
+     */
+    public function getCityCommune()
+    {
+        return $this->cityCommune;
+    }
+
+    /**
+     * Set cityCodeCommune
+     *
+     * @param string $cityCodeCommune
+     * @return Cities
+     */
+    public function setCityCodeCommune($cityCodeCommune)
+    {
+        $this->cityCodeCommune = $cityCodeCommune;
+
+        return $this;
+    }
+
+    /**
+     * Get cityCodeCommune
+     *
+     * @return string 
+     */
+    public function getCityCodeCommune()
+    {
+        return $this->cityCodeCommune;
+    }
+
+    /**
+     * Set cityArrondissement
+     *
+     * @param integer $cityArrondissement
+     * @return Cities
+     */
+    public function setCityArrondissement($cityArrondissement)
+    {
+        $this->cityArrondissement = $cityArrondissement;
+
+        return $this;
+    }
+
+    /**
+     * Get cityArrondissement
+     *
+     * @return integer 
+     */
+    public function getCityArrondissement()
+    {
+        return $this->cityArrondissement;
+    }
+
+    /**
+     * Set cityCanton
+     *
+     * @param string $cityCanton
+     * @return Cities
+     */
+    public function setCityCanton($cityCanton)
+    {
+        $this->cityCanton = $cityCanton;
+
+        return $this;
+    }
+
+    /**
+     * Get cityCanton
+     *
+     * @return string 
+     */
+    public function getCityCanton()
+    {
+        return $this->cityCanton;
+    }
+
+    /**
+     * Set cityAmdi
+     *
+     * @param integer $cityAmdi
+     * @return Cities
+     */
+    public function setCityAmdi($cityAmdi)
+    {
+        $this->cityAmdi = $cityAmdi;
+
+        return $this;
+    }
+
+    /**
+     * Get cityAmdi
+     *
+     * @return integer 
+     */
+    public function getCityAmdi()
+    {
+        return $this->cityAmdi;
+    }
+
+    /**
+     * Set cityPopulation2010
+     *
+     * @param integer $cityPopulation2010
+     * @return Cities
+     */
+    public function setCityPopulation2010($cityPopulation2010)
+    {
+        $this->cityPopulation2010 = $cityPopulation2010;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPopulation2010
+     *
+     * @return integer 
+     */
+    public function getCityPopulation2010()
+    {
+        return $this->cityPopulation2010;
+    }
+
+    /**
+     * Set cityPopulation1999
+     *
+     * @param integer $cityPopulation1999
+     * @return Cities
+     */
+    public function setCityPopulation1999($cityPopulation1999)
+    {
+        $this->cityPopulation1999 = $cityPopulation1999;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPopulation1999
+     *
+     * @return integer 
+     */
+    public function getCityPopulation1999()
+    {
+        return $this->cityPopulation1999;
+    }
+
+    /**
+     * Set cityPopulation2012
+     *
+     * @param integer $cityPopulation2012
+     * @return Cities
+     */
+    public function setCityPopulation2012($cityPopulation2012)
+    {
+        $this->cityPopulation2012 = $cityPopulation2012;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPopulation2012
+     *
+     * @return integer 
+     */
+    public function getCityPopulation2012()
+    {
+        return $this->cityPopulation2012;
+    }
+
+    /**
+     * Set cityDensite2010
+     *
+     * @param integer $cityDensite2010
+     * @return Cities
+     */
+    public function setCityDensite2010($cityDensite2010)
+    {
+        $this->cityDensite2010 = $cityDensite2010;
+
+        return $this;
+    }
+
+    /**
+     * Get cityDensite2010
+     *
+     * @return integer 
+     */
+    public function getCityDensite2010()
+    {
+        return $this->cityDensite2010;
+    }
+
+    /**
+     * Set citySurface
+     *
+     * @param float $citySurface
+     * @return Cities
+     */
+    public function setCitySurface($citySurface)
+    {
+        $this->citySurface = $citySurface;
+
+        return $this;
+    }
+
+    /**
+     * Get citySurface
+     *
+     * @return float 
+     */
+    public function getCitySurface()
+    {
+        return $this->citySurface;
+    }
+
+    /**
+     * Set cityLongitudeDeg
+     *
+     * @param float $cityLongitudeDeg
+     * @return Cities
+     */
+    public function setCityLongitudeDeg($cityLongitudeDeg)
+    {
+        $this->cityLongitudeDeg = $cityLongitudeDeg;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLongitudeDeg
+     *
+     * @return float 
+     */
+    public function getCityLongitudeDeg()
+    {
+        return $this->cityLongitudeDeg;
+    }
+
+    /**
+     * Set cityLatitudeDeg
+     *
+     * @param float $cityLatitudeDeg
+     * @return Cities
+     */
+    public function setCityLatitudeDeg($cityLatitudeDeg)
+    {
+        $this->cityLatitudeDeg = $cityLatitudeDeg;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLatitudeDeg
+     *
+     * @return float 
+     */
+    public function getCityLatitudeDeg()
+    {
+        return $this->cityLatitudeDeg;
+    }
+
+    /**
+     * Set cityLongitudeGrd
+     *
+     * @param string $cityLongitudeGrd
+     * @return Cities
+     */
+    public function setCityLongitudeGrd($cityLongitudeGrd)
+    {
+        $this->cityLongitudeGrd = $cityLongitudeGrd;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLongitudeGrd
+     *
+     * @return string 
+     */
+    public function getCityLongitudeGrd()
+    {
+        return $this->cityLongitudeGrd;
+    }
+
+    /**
+     * Set cityLatitudeGrd
+     *
+     * @param string $cityLatitudeGrd
+     * @return Cities
+     */
+    public function setCityLatitudeGrd($cityLatitudeGrd)
+    {
+        $this->cityLatitudeGrd = $cityLatitudeGrd;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLatitudeGrd
+     *
+     * @return string 
+     */
+    public function getCityLatitudeGrd()
+    {
+        return $this->cityLatitudeGrd;
+    }
+
+    /**
+     * Set cityLongitudeDms
+     *
+     * @param string $cityLongitudeDms
+     * @return Cities
+     */
+    public function setCityLongitudeDms($cityLongitudeDms)
+    {
+        $this->cityLongitudeDms = $cityLongitudeDms;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLongitudeDms
+     *
+     * @return string 
+     */
+    public function getCityLongitudeDms()
+    {
+        return $this->cityLongitudeDms;
+    }
+
+    /**
+     * Set cityLatitudeDms
+     *
+     * @param string $cityLatitudeDms
+     * @return Cities
+     */
+    public function setCityLatitudeDms($cityLatitudeDms)
+    {
+        $this->cityLatitudeDms = $cityLatitudeDms;
+
+        return $this;
+    }
+
+    /**
+     * Get cityLatitudeDms
+     *
+     * @return string 
+     */
+    public function getCityLatitudeDms()
+    {
+        return $this->cityLatitudeDms;
+    }
+
+    /**
+     * Set cityZmin
+     *
+     * @param integer $cityZmin
+     * @return Cities
+     */
+    public function setCityZmin($cityZmin)
+    {
+        $this->cityZmin = $cityZmin;
+
+        return $this;
+    }
+
+    /**
+     * Get cityZmin
+     *
+     * @return integer 
+     */
+    public function getCityZmin()
+    {
+        return $this->cityZmin;
+    }
+
+    /**
+     * Set cityZmax
+     *
+     * @param integer $cityZmax
+     * @return Cities
+     */
+    public function setCityZmax($cityZmax)
+    {
+        $this->cityZmax = $cityZmax;
+
+        return $this;
+    }
+
+    /**
+     * Get cityZmax
+     *
+     * @return integer 
+     */
+    public function getCityZmax()
+    {
+        return $this->cityZmax;
+    }
+}

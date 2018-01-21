@@ -1,0 +1,23 @@
+<button class="btn btn-info" type="button" data-toggle="modal" data-target=".bs-position-modal-lg">Ajouter une position</button>
+
+<div id="addposition" class="modal fade bs-position-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content {% if script %}panel-danger{% endif %}">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel"><i class="fa fa-thumb-tack"></i> Ajouter une position</h3>
+            </div>
+            <div class="modal-body">
+                <form id="cityForm" action="{{ path('homepage') }}" method="post" {{ form_enctype(formCity) }}>
+                    {{ form_row(formCity.country) }}
+                    {{ form_row(formCity.department) }}
+                    <hr>
+                    {{ form_row(formCity.name) }}
+                    {{ form_rest(formCity) }}
+                    <hr>
+                    <input id="submitForm" type="submit" class="btn btn-success" value="Ajouter une position">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

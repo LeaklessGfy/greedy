@@ -1,0 +1,29 @@
+<div class="panel panel-info need">
+
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">{{ need.title|upper }} - {{ need.quantity }}{{ need.measure }}</h3>
+        <div class="need-options">
+            <div class="need-date pull-left">
+                <p><i class="fa fa-calendar"></i> {{ need.date|date('d M Y') }}</p>
+            </div>
+            <div class="need-position text-right">
+                <p><i class="fa fa-map-marker"></i> Aux alentours de : {{ need.position.city.cityNomReel }}, {{ need.position.city.cityDepartement }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="need-description">
+            <h4>DESCRIPTION</h4>
+            <p>{{ need.description }}</p>
+        </div>
+
+        <div class="need-endDate">
+            - A pourvoir avant le : {{ need.endDate|date('d-m-y') }}
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a href="{{ path('app_chat_chatroom') }}" class="btn btn-success">Réponses</a>
+        <button data-id="{{ need.id }}" data-name="{{ need.title }}" class="btn btn-danger btn-need-delete" type="button" data-toggle="modal" data-target="#deleteNeed">Supprimer</button>
+    </div>
+</div>

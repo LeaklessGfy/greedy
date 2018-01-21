@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{% block title %}Greedy - Connexion{% endblock title %}</title>
+    <meta charset="UTF-8">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster|Pacifico|Satisfy|Tangerine' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header>
+            <img src="{{ asset('img/greedy-logo-blue1.png') }}" alt="Logo Greedy" width="200px" class="logo-img">
+            <h1 class="greedy-title">
+                <span class="logo">Greedy</span>,
+                <br><span class="slogan">Ce que tu veux, quand tu veux</span>
+            </h1>
+            <em>Anonyme, Rapide, Libre</em>
+        </header>
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}
+        {% endblock body %}
+        <footer>
+            <p class="footer-links">
+                <a href="#">Plus d'information</a>
+            </p>
+
+            <p class="footer-author">
+                © 2015 GreedyApp<br>
+                Gesaffelsky & Co' <sup><i class="fa fa-trademark"></i></sup>
+            </p>
+        </footer>
+    </div>
+    {% javascripts 'js/jquery-1.11.3.min.js' 'js/bootstrap.min.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $( document ).ready(function() {
+            $('#popthis').popover();
+            $('#myModal').modal();
+        });
+    </script>
+</body>
+</html>

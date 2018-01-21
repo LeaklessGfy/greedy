@@ -1,0 +1,40 @@
+front:
+    resource: "@AppBundle/Controller"
+    type:     annotation
+
+register:
+    path: /register
+    defaults: { _controller: AppBundle:Security:register }
+
+login:
+    path: /login
+    defaults: { _controller: AppBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+tutorialIndex:
+    path: /tutorial
+    defaults: { _controller: AppBundle:Tutorial:index }
+
+reportControl:
+    path: /report/centre-controle
+    defaults: { _controller: AppBundle:Report:reportControl }
+
+reportByChat:
+    path: /report/by-chat-room
+    defaults: { _controller: AppBundle:Report:reportByChat }
+
+ajax_deleteNeed:
+    path: /delete/{id}
+    defaults: { _controller: AppBundle:Ajax:deleteNeed }
+
+#ajax_addMessage:
+#    path: /add-message
+#    defaults: { _controller: AppBundle:Ajax:addMessage }

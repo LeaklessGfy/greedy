@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="activeNeed-body">
+        <h2>VOS NEEDS</h2>
+        <div class="container-fluid">
+            {% for entry in allNeeds|batch(3) %}
+                <div class="row">
+                    {% for need in entry %}
+                        <div class="col-md-4">
+                            {% include "partial/need.html.twig" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'modules/deleteNeed.html' %}
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

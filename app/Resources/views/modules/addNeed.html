@@ -1,0 +1,44 @@
+{% block head %}
+    {{ form_stylesheet(formNeeds) }}
+{% endblock %}
+
+<div id="addNeed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content {% if not formNeeds.vars.valid %}panel-danger{% endif %}">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel"><i class="fa fa-fire"></i> Ajouter une Need</h3>
+            </div>
+            <div class="modal-body">
+                {{ form_start(formNeeds, {'attr' : {'novalidate' : 'novalidate'} }) }}
+                {{ form_row(formNeeds.title) }}
+                {{ form_row(formNeeds.description) }}
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(formNeeds.quantity, { 'attr' : {'autocomplete':'off'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(formNeeds.measure) }}
+                    </div>
+                </div>
+                <hr>
+                {{ form_row(formNeeds.endDate, { 'attr' : {'autocomplete':'off', 'placeholder':'Clique-ici pour afficher le calendrier !'} }) }}
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(formNeeds.codePostal, { 'attr' : {'autocomplete':'off'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(formNeeds.city, { 'attr':{'disabled':'disabled'} }) }}
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-success" value="Ajouter ma Need">
+                </div>
+                {{ form_end(formNeeds) }}
+            </div>
+        </div>
+    </div>
+</div>

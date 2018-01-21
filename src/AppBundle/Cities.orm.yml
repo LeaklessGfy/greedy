@@ -1,0 +1,225 @@
+Cities:
+    type: entity
+    table: cities
+    indexes:
+        city_departement:
+            columns:
+                - city_departement
+        city_nom:
+            columns:
+                - city_nom
+        city_nom_reel:
+            columns:
+                - city_nom_reel
+        city_code_postal:
+            columns:
+                - city_code_postal
+        city_longitude_latitude_deg:
+            columns:
+                - city_longitude_deg
+                - city_latitude_deg
+        city_nom_soundex:
+            columns:
+                - city_nom_soundex
+        city_nom_metaphone:
+            columns:
+                - city_nom_metaphone
+        city_population_2010:
+            columns:
+                - city_population_2010
+        city_nom_simple:
+            columns:
+                - city_nom_simple
+    uniqueConstraints:
+        city_code_commune_2:
+            columns:
+                - city_code_commune
+        city_slug:
+            columns:
+                - city_slug
+    id:
+        cityId:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            column: city_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        cityDepartement:
+            type: string
+            nullable: true
+            length: 3
+            fixed: false
+            comment: ''
+            column: city_departement
+        citySlug:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: city_slug
+        cityNom:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+            column: city_nom
+        cityNomSimple:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+            column: city_nom_simple
+        cityNomReel:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+            column: city_nom_reel
+        cityNomSoundex:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+            comment: ''
+            column: city_nom_soundex
+        cityNomMetaphone:
+            type: string
+            nullable: true
+            length: 22
+            fixed: false
+            comment: ''
+            column: city_nom_metaphone
+        cityCodePostal:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: city_code_postal
+        cityCommune:
+            type: string
+            nullable: true
+            length: 3
+            fixed: false
+            comment: ''
+            column: city_commune
+        cityCodeCommune:
+            type: string
+            nullable: false
+            length: 5
+            fixed: false
+            comment: ''
+            column: city_code_commune
+        cityArrondissement:
+            type: smallint
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: city_arrondissement
+        cityCanton:
+            type: string
+            nullable: true
+            length: 4
+            fixed: false
+            comment: ''
+            column: city_canton
+        cityAmdi:
+            type: smallint
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: city_amdi
+        cityPopulation2010:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: city_population_2010
+        cityPopulation1999:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: city_population_1999
+        cityPopulation2012:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: approximatif
+            column: city_population_2012
+        cityDensite2010:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: city_densite_2010
+        citySurface:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            comment: ''
+            column: city_surface
+        cityLongitudeDeg:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            comment: ''
+            column: city_longitude_deg
+        cityLatitudeDeg:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            comment: ''
+            column: city_latitude_deg
+        cityLongitudeGrd:
+            type: string
+            nullable: true
+            length: 9
+            fixed: false
+            comment: ''
+            column: city_longitude_grd
+        cityLatitudeGrd:
+            type: string
+            nullable: true
+            length: 8
+            fixed: false
+            comment: ''
+            column: city_latitude_grd
+        cityLongitudeDms:
+            type: string
+            nullable: true
+            length: 9
+            fixed: false
+            comment: ''
+            column: city_longitude_dms
+        cityLatitudeDms:
+            type: string
+            nullable: true
+            length: 8
+            fixed: false
+            comment: ''
+            column: city_latitude_dms
+        cityZmin:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: city_zmin
+        cityZmax:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: city_zmax
+    lifecycleCallbacks: {  }

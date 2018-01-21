@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="chatRoom-body">
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li {% if app.request.get('_route') == "app_chat_chatneed" %}class="active"{% endif %}><a href="{{ path('app_chat_chatneed') }}">Vos Needs</a></li>
+                <li {% if app.request.get('_route') == "app_chat_chatfeed" %}class="active"{% endif %}><a href="{{ path('app_chat_chatfeed') }}">Vos Feeds</a></li>
+            </ul>
+
+            <div class="well">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="needs">
+                        {% block interface %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsTwigUse %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
